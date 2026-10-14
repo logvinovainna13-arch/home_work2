@@ -50,7 +50,7 @@ class _CounterPageState extends State<CounterPage> {
               FloatingActionButton(
                   child: Icon(Icons.remove),
                   onPressed: () {
-                    _counterCubit.increment(counter);
+                    _counterCubit.decrement(counter);
                   }
               ),
             ]
