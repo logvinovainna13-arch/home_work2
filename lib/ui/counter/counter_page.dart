@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:home_work2/ui/counter/cubit/counter_cubit.dart';
 import 'package:home_work2/data/repository/counter_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,7 +13,7 @@ class CounterPage extends StatefulWidget {
 class _CounterPageState extends State<CounterPage> {
   final CounterRepository _repository = CounterRepository();
   int counter = 0;
-  final CounterCubit _counterCubit = CounterCubit();
+  final CounterBloc _counterBloc = CounterBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +21,10 @@ class _CounterPageState extends State<CounterPage> {
       SafeArea(child:
       Scaffold(
         body: Center(
-          child: BlocBuilder<CounterCubit, CounterState>(
+          child: BlocBuilder<CounterBloc, CounterState>(
               bloc: _counterCubit,
               builder: (context, state) {
-                if (state is GetCounterState) {
+                if (state is GetCountState) {
                   counter = state.count;
                   return Text(
                       state.count.toString(),
@@ -43,14 +42,14 @@ class _CounterPageState extends State<CounterPage> {
                   heroTag: 'Text',
                   child: Icon(Icons.add),
                   onPressed: () {
-                    _counterCubit.increment(counter);
+                    _counterBloc.add(IncrementCountEvent(count:counter));
                   }
               ),
               const SizedBox(height: 14),
               FloatingActionButton(
                   child: Icon(Icons.remove),
                   onPressed: () {
-                    _counterCubit.decrement(counter);
+                   // _counterCubit.decrement(counter);
                   }
               ),
             ]
