@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:talker_flutter/talker_flutter.dart'
+import 'cat_bloc.dart';
 
-class ImageDogPage extends StatefullWidget {
-  const ImageDogPage({super.key});
+class ImageCatPage extends StatefulWidget {
+  const ImageCatPage({super.key});
 
   @override
-  State<ImageDogPage> createState() => _ImageDogPageState();
+  State<ImageCatPage> createState() => _ImageCatPageState();
 }
 
-class _ImageDogPageState extends State<ImageDogPage>{
-  final DogBloc _dogBloc = DogBloc();
+class _ImageCatPageState extends State<ImageCatPage>{
+  final CatBloc _catBloc = CatBloc();
 
 
   @override
@@ -20,14 +19,14 @@ class _ImageDogPageState extends State<ImageDogPage>{
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.refresh),
           onPressed: (){
-        _dogBloc.add(GetDogImageEvent());
+        _catBloc.add(GetCatImageEvent());
       },
       ),
       body: Center(
-        child: BlocBuilder<DogBloc, DogState>(
-        bloc: _dogBloc,
-        buider: (context, state) {
-          if(state is LoadedDogImageState){
+        child: BlocBuilder<CatBloc, CatState>(
+        bloc: _catBloc,
+        builder: (context, state) {
+          if(state is LoadedCatImageState){
             return Image.network(
                 state.img,
             loadingBuilder: (context, child, loadingProgress){
@@ -38,10 +37,10 @@ class _ImageDogPageState extends State<ImageDogPage>{
             },
             );
           }
-          if(state is ErrorDogState){
+          if(state is ErrorCatState){
             return Text('Ошибка загрузки', style: TextStyle(fontSize: 50) );
           }
-          if(state is LoadingDogState){
+          if(state is LoadingCatState){
             return CircularProgressIndicator.adaptive();
           }
           return Text('Initial State');
